@@ -2,18 +2,13 @@ from PIL import Image
 import pyautogui
 import keyboard, mouse
 import time, os
-import config
+import config, image_loader
 
 path = input("Image path: ")
-image = Image.open(path.strip('"'))
-gray_img = image.convert("L")
 
-is_invert = input("invert image? (1 - yes, default - no): ")
-if is_invert == "1":
-    bw_img = gray_img.point(lambda x: 255 if x < config.THRESHOLD else 0, '1')
-else:
-    bw_img = gray_img.point(lambda x: 0 if x < config.THRESHOLD else 255, '1')
+is_invert = True if input("invert image? (1 - yes, default - no): ") == "1" else False
 
+img = image_loader.load_image(path, is_invert, config.THRESHOLD)
 
 upper_left = list()
 lower_right = list()
@@ -37,7 +32,7 @@ while(True): #setting the lower right corner coordinate
         lower_right.append(pyautogui.position().y)
         break
 
-final_img = bw_img.resize((lower_right[0]-upper_left[0], lower_right[1]-upper_left[1])) #resizing image
+final_img = img.resize((lower_right[0]-upper_left[0], lower_right[1]-upper_left[1])) #resizing image
 
 between_clicks_delay = config.DEFAULT_DELAY
 between_clicks_delay_input = input("between clicks delay in seconds (default: 0.003): ")
