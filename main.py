@@ -2,7 +2,8 @@ from PIL import Image
 import pyautogui
 import keyboard, mouse
 import time, os
-import config, image_loader, area_selector, painter
+import config
+from core import image_loader, area_selector, painter
 
 path = input("Image path: ")
 
