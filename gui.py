@@ -19,7 +19,8 @@ def run():
     open_file_button = tk.Button(main, text="Choose file", command=choose_file)
     open_file_button.pack(pady=5)
 
-    is_invert_checkmark = tk.Checkbutton(main, text="Invert image")
+    invert_var = tk.BooleanVar()
+    is_invert_checkmark = tk.Checkbutton(main, text="Invert image", variable=invert_var)
     is_invert_checkmark.pack(pady=5)
 
     delay_text = tk.Label(main, text="Between clicks delay")
