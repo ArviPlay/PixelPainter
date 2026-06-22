@@ -1,11 +1,16 @@
 import tkinter as tk
 from tkinter import filedialog
+from core import area_selector
 import config
 
 def run():
+    upper_left = ()
+    lower_right = ()
     def choose_file():
         file_path_label.config(text=filedialog.askopenfilename(filetypes=[("Images", "*.jpg;*.jpeg;*.png")]))
-
+    def select_area():
+        upper_left, lower_right = area_selector.select_area()
+        area_label.config(text=f"upper left: x={upper_left[0]}, y={upper_left[1]}\nlower right: x={lower_right[0]}, y={lower_right[1]}")
     main = tk.Tk()
     main.title("PixelPainter")
     main.geometry("400x300")
@@ -29,9 +34,9 @@ def run():
     delay.insert(0, config.DEFAULT_DELAY)
     delay.pack()
 
-    area_label = tk.Label(main, text="upper left: x=0, y=0\nlower right: x=0, y=0")
+    area_label = tk.Label(main, text="")
     area_label.pack(pady=5)
-    select_area_button = tk.Button(main, text="Select area")
+    select_area_button = tk.Button(main, text="Select area", command=select_area)
     select_area_button.pack(pady=5)
 
     start_button = tk.Button(main, text="Start")
