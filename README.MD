@@ -42,3 +42,4 @@ python main.py
 ```
 ## Notes
 - works best with high-contrast black-and-white images
+- gui built with tkinter
