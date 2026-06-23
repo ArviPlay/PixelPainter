@@ -13,20 +13,23 @@ def run():
         upper_left, lower_right = area_selector.select_area()
         area_label.config(text=f"upper left: x={upper_left[0]}, y={upper_left[1]}\nlower right: x={lower_right[0]}, y={lower_right[1]}")
     def paint():
-        if not messagebox.askyesno("confirm", "start painting?\nESC - break"):
-            return
-        if file_path_label.cget('text') == "":
-            messagebox.showwarning("Warning", "file field is empty")
-            return
-        elif delay.get() == "":
-            messagebox.showwarning("Warning", "delay field is empty")
-            return
-        elif area_label.cget('text') == "":
-            messagebox.showwarning("Warning", "area field is empty")
-            return
-        else:
-            img = image_loader.load_image(file_path_label.cget('text'), invert_var.get(), max(0, min(int(threshold.get()), 255)))
-            painter.paint(img, float(delay.get()), upper_left, lower_right)
+        try:
+            if not messagebox.askyesno("confirm", "start painting?\nESC - break"):
+                return
+            if file_path_label.cget('text') == "":
+                messagebox.showwarning("Warning", "file field is empty")
+                return
+            elif delay.get() == "":
+                messagebox.showwarning("Warning", "delay field is empty")
+                return
+            elif area_label.cget('text') == "":
+                messagebox.showwarning("Warning", "area field is empty")
+                return
+            else:
+                img = image_loader.load_image(file_path_label.cget('text'), invert_var.get(), max(0, min(int(threshold.get()), 255)))
+                painter.paint(img, float(delay.get()), upper_left, lower_right)
+        except Exception as e:
+            messagebox.showerror("Error", str(e))
     main = tk.Tk()
     main.title("PixelPainter")
     main.geometry("400x330")
