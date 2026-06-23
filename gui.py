@@ -25,11 +25,11 @@ def run():
             messagebox.showwarning("Warning", "area field is empty")
             return
         else:
-            img = image_loader.load_image(file_path_label.cget('text'), invert_var.get(), config.THRESHOLD)
+            img = image_loader.load_image(file_path_label.cget('text'), invert_var.get(), max(0, min(int(threshold.get()), 255)))
             painter.paint(img, float(delay.get()), upper_left, lower_right)
     main = tk.Tk()
     main.title("PixelPainter")
-    main.geometry("400x300")
+    main.geometry("400x330")
 
     label = tk.Label(main, text="PixelPainter")
     label.pack(pady=10)
@@ -43,6 +43,12 @@ def run():
     invert_var = tk.BooleanVar()
     is_invert_checkmark = tk.Checkbutton(main, text="Invert image", variable=invert_var)
     is_invert_checkmark.pack(pady=5)
+
+    threshold_text = tk.Label(main, text="Threshold (0-255)")
+    threshold_text.pack()
+    threshold = tk.Entry(main)
+    threshold.insert(0, config.THRESHOLD)
+    threshold.pack()
 
     delay_text = tk.Label(main, text="Between clicks delay")
     delay_text.pack()
